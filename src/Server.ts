@@ -4,7 +4,7 @@ import http = require("http");
 
 class Server
 {
-	private static readonly VIEWS_PATH:string = __dirname + "../views/";
+	private static readonly VIEWS_PATH:string = __dirname + "/../webapp/";
 	private readonly PORT:number;
 	private app = express();
 	private io:socketio.Server;
@@ -25,7 +25,8 @@ class Server
 			console.error(err);
 			return;
 		}
-		this.app.use(express.static("views"));
+		console.log(`Server is running on port ${this.PORT}.`);
+		this.app.use(express.static("webapp"));
 		this.app.get("/", (req:express.Request, res:express.Response) => {
 			req;
 			res.sendFile(Server.VIEWS_PATH + "index.html");
