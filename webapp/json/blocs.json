@@ -1,10 +1,17 @@
 {
 	"path": "assets/img/terrain.png",
-	"blocs": [
+	"datas": [
 		{
 			"name": "red_grass",
 			"position": {
 				"x": 0,
+				"y": 0
+			}
+		},
+		{
+			"name": "sand_rock",
+			"position": {
+				"x": 3,
 				"y": 0
 			}
 		},
@@ -16,9 +23,23 @@
 			}
 		},
 		{
+			"name": "blue_built_rock",
+			"position": {
+				"x": 3,
+				"y": 1
+			}
+		},
+		{
 			"name": "tree_trunk",
 			"position": {
 				"x": 0,
+				"y": 2
+			}
+		},
+		{
+			"name": "tree_leafs",
+			"position": {
+				"x": 3,
 				"y": 2
 			}
 		}
