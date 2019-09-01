@@ -17,4 +17,8 @@ abstract class Utils
 
 		return (output.scale(1 / size));
 	}
+	public static rand(min:number, max:number):number
+	{
+		return (~~(min + Math.random() * (max - min)));
+	}
 }

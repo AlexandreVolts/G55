@@ -35,6 +35,7 @@ namespace JSONType
 	{
 		name:string;
 		ground:Cube.Type;
+		underground:Cube.Type;
 		size:number;
 		height:number;
 	}
