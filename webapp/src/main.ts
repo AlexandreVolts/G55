@@ -2,7 +2,11 @@
 
 function main()
 {
-	new Game();
+	const JSON_FILES:string[] = ["blocs", "planets"];
+	
+	Utils.datas = new JSONLoaderMap(JSON_FILES, () => {
+		new Game();
+	});
 }
 
 window.addEventListener("DOMContentLoaded", main);

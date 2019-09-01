@@ -1,5 +1,6 @@
 abstract class Utils
 {
+	public static datas:JSONLoaderMap;
 	/**
 	 * Returns a faceUV texture vector based on a position and a size.
 	 *

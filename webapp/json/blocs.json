@@ -9,23 +9,9 @@
 			}
 		},
 		{
-			"name": "sand_rock",
-			"position": {
-				"x": 3,
-				"y": 0
-			}
-		},
-		{
 			"name": "blue_rock",
 			"position": {
 				"x": 0,
-				"y": 1
-			}
-		},
-		{
-			"name": "blue_built_rock",
-			"position": {
-				"x": 3,
 				"y": 1
 			}
 		},
@@ -41,6 +27,20 @@
 			"position": {
 				"x": 3,
 				"y": 2
+			}
+		},
+		{
+			"name": "sand_rock",
+			"position": {
+				"x": 3,
+				"y": 0
+			}
+		},
+		{
+			"name": "blue_built_rock",
+			"position": {
+				"x": 3,
+				"y": 1
 			}
 		}
 	]

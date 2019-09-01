@@ -1,0 +1,10 @@
+{
+	"datas": [
+		{
+			"name": "Red Planet",
+			"ground": "red_grass",
+			"size": 6,
+			"height": 50
+		}
+	]
+}

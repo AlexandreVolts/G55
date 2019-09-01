@@ -24,7 +24,7 @@ class JSONLoaderMap
 			this.callback();
 	}
 
-	public get(path:string):JSONLoader
+	public get(path:string):any
 	{
 		return (JSON.parse((<JSONLoader>this.jsonLoaders.get(path)).getDatas()));
 	}
