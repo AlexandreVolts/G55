@@ -17,16 +17,16 @@ class Generator
 		let i = size - 1;
 		let middle:number, avg:number, padding:number, sum:number, n:number;
 
-		this.datas.set(0, 0, Utils.rand(0, size));
-		this.datas.set(0, size - 1, Utils.rand(0, size));
-		this.datas.set(size - 1, 0, Utils.rand(0, size));
-		this.datas.set(size - 1, size - 1, Utils.rand(0,  size));
+		this.datas.set(0, 0, Utils.rand(0, this.PLANET.height));
+		this.datas.set(0, size - 1, Utils.rand(0, this.PLANET.height));
+		this.datas.set(size - 1, 0, Utils.rand(0, this.PLANET.height));
+		this.datas.set(size - 1, size - 1, Utils.rand(0,  this.PLANET.height));
 		while (i > 1) {
 			middle = i / 2;
 			for (let j = middle; j < size; j += i) {
 				for (let k = middle; k < size; k += i) {
 					avg = this.getAverage(j, k, middle);
-					this.datas.set(j, k, avg + Utils.rand(-middle, middle));
+					this.set(j, k, avg + Utils.rand(-middle, middle));
 				}
 			}
 			for (let j = 0; j < size; j += middle) {
@@ -50,7 +50,7 @@ class Generator
 						sum += this.datas.get(j, k + middle);
 						n++;
 					}
-					this.datas.set(j, k, Math.round(sum / n) + Utils.rand(-middle, middle));
+					this.set(j, k, Math.round(sum / n) + Utils.rand(-middle, middle));
 				}
 			}
 			i = middle;
@@ -86,6 +86,12 @@ class Generator
 		if (!this.map[x][y])
 			this.map[x][y] = [];
 		this.map[x][y][z] = value;
+	}
+	private set(x:number, y:number, value:number):void
+	{
+		if (value < 0)
+			value = 0;
+		this.datas.set(x, y, value);
 	}
 	
 	public getDimensions():BABYLON.Vector3

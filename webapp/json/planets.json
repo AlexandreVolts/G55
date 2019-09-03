@@ -4,8 +4,15 @@
 			"name": "Red Planet",
 			"ground": "red_grass",
 			"underground": "blue_rock",
+			"structures": [
+				{
+					"structure": "trunk",
+					"minQuantity": 5,
+					"maxQuantity": 30
+				}
+			],
 			"size": 6,
-			"height": 48
+			"height": 32
 		}
 	]
 }

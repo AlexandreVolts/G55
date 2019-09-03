@@ -27,8 +27,7 @@ class BlocBuilder
 			params.faceUV.push(Utils.getFaceUV(new BABYLON.Vector2(texPosition.x + 1, texPosition.y)))
 			mesh = BABYLON.MeshBuilder.CreateBox("bb-" + datas[i].name, params, scene);
 			mesh.material = material;
-			mesh.position.z = 10;
-			mesh.position.x = i * BlocBuilder.SIZE;
+			mesh.isVisible = false;
 			this.blocs.set(datas[i].name, mesh);
 		}
 	}

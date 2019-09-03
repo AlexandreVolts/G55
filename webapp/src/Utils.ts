@@ -1,6 +1,11 @@
 abstract class Utils
 {
 	public static datas:JSONLoaderMap;
+
+	public static rand(min:number, max:number):number
+	{
+		return (~~(min + Math.random() * (max - min)));
+	}
 	/**
 	 * Returns a faceUV texture vector based on a position and a size.
 	 *
@@ -16,9 +21,5 @@ abstract class Utils
 		output = new BABYLON.Vector4(position.x, position.y, position.x + 1, position.y + 1);
 
 		return (output.scale(1 / size));
-	}
-	public static rand(min:number, max:number):number
-	{
-		return (~~(min + Math.random() * (max - min)));
 	}
 }

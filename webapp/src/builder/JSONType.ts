@@ -1,5 +1,10 @@
 namespace JSONType
 {
+	export type PlanetStructures = Array<{
+		structure:string,
+		minQuantity:number,
+		maxQuantity:number
+	}>;
 	interface Type
 	{
 		name:string;
@@ -13,9 +18,9 @@ namespace JSONType
 		path:string;
 		datas:JSONType.Bloc[];
 	}
-	export interface BiomeDescriptor extends Descriptor
+	export interface StructureDescriptor extends Descriptor
 	{
-		datas:JSONType.Biome[];
+		datas:JSONType.Structure[];
 	}
 	export interface PlanetDescriptor extends Descriptor
 	{
@@ -23,19 +28,19 @@ namespace JSONType
 	}
 	export interface Bloc extends Type
 	{
-		name:string;
 		position:BABYLON.Vector2;
 	}
-	export interface Biome extends Type
+	export interface Structure extends Type
 	{
-		name:string;
-		floor:Cube.Type;
+		bloc:Cube.Type;
+		minSize:BABYLON.Vector3;
+		maxSize:BABYLON.Vector3;
 	}
 	export interface Planet extends Type
 	{
-		name:string;
 		ground:Cube.Type;
 		underground:Cube.Type;
+		structures:PlanetStructures;
 		size:number;
 		height:number;
 	}

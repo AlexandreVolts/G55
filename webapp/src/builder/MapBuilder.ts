@@ -1,7 +1,10 @@
 class MapBuilder
 {
-	private generator:Generator = new Generator();
+	constructor(private generator:Generator)
+	{
 
+	}
+	
 	private isBlocVisible(x:number, y:number, z:number):boolean
 	{
 		const g = this.generator;
