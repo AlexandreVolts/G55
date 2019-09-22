@@ -1,8 +1,8 @@
 class Player extends BABYLON.UniversalCamera
 {
-	constructor(scene:BABYLON.Scene)
+	constructor()
 	{
-		super("playerCamera", BABYLON.Vector3.Zero(), scene);
-		this.attachControl(<HTMLElement>scene.getEngine().getRenderingCanvas());
+		super("playerCamera", BABYLON.Vector3.Zero(), Game.scene);
+		this.attachControl(<HTMLElement>Game.scene.getEngine().getRenderingCanvas());
 	}
 }

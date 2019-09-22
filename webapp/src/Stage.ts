@@ -1,26 +1,27 @@
 class Stage
 {
-	private blocBuilder:BlocBuilder;
 	private light:BABYLON.HemisphericLight|undefined;
+	private blocBuilder:BlocBuilder;
 	private generator:Generator = new Generator();
-	private mapBuilder:MapBuilder = new MapBuilder(this.generator);
+	private mapBuilder:MapBuilder;
 	private player:Player;
 
-	constructor(private scene:BABYLON.Scene)
+	constructor()
 	{
 		let blocsDatas:any = Utils.datas.get("blocs");
 
-		this.blocBuilder = new BlocBuilder(blocsDatas.path, blocsDatas.datas, this.scene);
+		this.blocBuilder = new BlocBuilder(blocsDatas.path, blocsDatas.datas);
+		this.mapBuilder = new MapBuilder(this.generator, this.blocBuilder);
+		this.mapBuilder.build();
+		this.player = new Player();
 		this.initialiseLight();
-		this.mapBuilder.build(this.blocBuilder);
-		this.player = new Player(scene);
 	}
 
 	private initialiseLight():void
 	{
 		const LIGHT_DIR = new BABYLON.Vector3(0, 1, 0);
 		
-		this.light = new BABYLON.HemisphericLight("light", LIGHT_DIR, this.scene);
+		this.light = new BABYLON.HemisphericLight("light", LIGHT_DIR, Game.scene);
 		this.light.diffuse = new BABYLON.Color3(1, 1, 1);
 		this.light.specular = new BABYLON.Color3(0, 0, 0);
 	}

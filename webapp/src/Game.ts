@@ -1,28 +1,28 @@
 class Game
 {
-	private readonly CANVAS = document.getElementsByTagName("canvas")[0];
-	private engine:BABYLON.Engine = new BABYLON.Engine(this.CANVAS, true);
-	private scene:BABYLON.Scene = new BABYLON.Scene(this.engine);
-	private stage:Stage = new Stage(this.scene);
+	private static readonly CANVAS = document.getElementsByTagName("canvas")[0];
+	private static engine:BABYLON.Engine = new BABYLON.Engine(Game.CANVAS, true);
+	public static scene:BABYLON.Scene = new BABYLON.Scene(Game.engine);
+	private stage:Stage = new Stage();
 
 	constructor()
 	{
-		this.scene.autoClearDepthAndStencil = false;
-		this.scene.clearColor = new BABYLON.Color4(0, 0.6, 0.8, 1);
+		Game.scene.autoClearDepthAndStencil = false;
+		Game.scene.clearColor = new BABYLON.Color4(0, 0.6, 0.8, 1);
 		this.run();
 	}
 
 	private run():void
 	{
-		this.engine.runRenderLoop(this.render);
+		Game.engine.runRenderLoop(this.render);
 		window.addEventListener("resize", () => {
-			this.engine.resize();
+			Game.engine.resize();
 		});
 	}
 	
 	public render = ():void =>
 	{
-		this.scene.render();
+		Game.scene.render();
 		this.stage.render();
 	}
 }

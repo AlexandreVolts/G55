@@ -1,8 +1,10 @@
 class MapBuilder
 {
-	constructor(private generator:Generator)
-	{
+	private structureBuilder:StructureBuilder;
 
+	constructor(private generator:Generator, private blocBuilder:BlocBuilder)
+	{
+		this.structureBuilder = new StructureBuilder(Utils.datas.get("structures").datas, blocBuilder);
 	}
 	
 	private isBlocVisible(x:number, y:number, z:number):boolean
@@ -14,7 +16,7 @@ class MapBuilder
 			&& g.exists(x, y, z - 1) && g.exists(x, y, z + 1)));
 	}
 	
-	public build(blocBuilder:BlocBuilder):Cube[]
+	public build():Cube[]
 	{
 		const SIZE = this.generator.getDimensions();
 		let output:Cube[] = [];
@@ -27,7 +29,7 @@ class MapBuilder
 					tile = this.generator.getTile(x, y, z);
 					if (!tile || !this.isBlocVisible(x, y, z))
 						continue;
-					cur = blocBuilder.getNewInstance(tile);
+					cur = this.blocBuilder.getNewInstance(tile);
 					if (!cur)
 						continue;
 					cur.position = new BABYLON.Vector3(x, y, z);
@@ -35,6 +37,8 @@ class MapBuilder
 				}
 			}
 		}
+		for (let tmp = 0; tmp < 10; tmp++)
+			this.structureBuilder.generate(Structure.Type.TRUNK, this.generator);
 		return (output);
 	}
 }

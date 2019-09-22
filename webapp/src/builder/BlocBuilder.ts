@@ -4,10 +4,10 @@ class BlocBuilder
 	private static current:number = 0;
 	private blocs:Map<string, BABYLON.Mesh> = new Map<string, BABYLON.Mesh>();
 
-	constructor(texturePath:string, datas:JSONType.Bloc[], scene:BABYLON.Scene)
+	constructor(texturePath:string, datas:JSONType.Bloc[])
 	{
-		let texture = new BABYLON.Texture(texturePath, scene, false, true, BABYLON.Texture.NEAREST_SAMPLINGMODE);
-		let material = new BABYLON.StandardMaterial("bbMaterial", scene);
+		let texture = new BABYLON.Texture(texturePath, Game.scene, false, true, BABYLON.Texture.NEAREST_SAMPLINGMODE);
+		let material = new BABYLON.StandardMaterial("bbMaterial", Game.scene);
 		let mesh:BABYLON.Mesh;
 		let sideUv:BABYLON.Vector4;
 		let texPosition:BABYLON.Vector2;
@@ -25,7 +25,7 @@ class BlocBuilder
 			}
 			params.faceUV.push(Utils.getFaceUV(texPosition));
 			params.faceUV.push(Utils.getFaceUV(new BABYLON.Vector2(texPosition.x + 1, texPosition.y)))
-			mesh = BABYLON.MeshBuilder.CreateBox("bb-" + datas[i].name, params, scene);
+			mesh = BABYLON.MeshBuilder.CreateBox("bb-" + datas[i].name, params, Game.scene);
 			mesh.material = material;
 			mesh.isVisible = false;
 			this.blocs.set(datas[i].name, mesh);

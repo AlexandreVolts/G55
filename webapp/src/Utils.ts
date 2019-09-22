@@ -6,6 +6,15 @@ abstract class Utils
 	{
 		return (~~(min + Math.random() * (max - min)));
 	}
+	public static getRandomVector(min:BABYLON.Vector3, max:BABYLON.Vector3):BABYLON.Vector3
+	{
+		let output:BABYLON.Vector3 = new BABYLON.Vector3();
+
+		output.x = Utils.rand(min.x, max.x);
+		output.y = Utils.rand(min.y, max.y);
+		output.z = Utils.rand(min.z, max.z);
+		return (output);
+	}
 	/**
 	 * Returns a faceUV texture vector based on a position and a size.
 	 *
