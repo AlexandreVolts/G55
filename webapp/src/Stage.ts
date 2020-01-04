@@ -2,7 +2,6 @@ class Stage
 {
 	private light:BABYLON.HemisphericLight|undefined;
 	private blocBuilder:BlocBuilder;
-	private generator:Generator = new Generator();
 	private mapBuilder:MapBuilder;
 	private player:Player;
 
@@ -11,7 +10,7 @@ class Stage
 		let blocsDatas:any = Utils.datas.get("blocs");
 
 		this.blocBuilder = new BlocBuilder(blocsDatas.path, blocsDatas.datas);
-		this.mapBuilder = new MapBuilder(this.generator, this.blocBuilder);
+		this.mapBuilder = new MapBuilder(this.blocBuilder);
 		this.mapBuilder.build();
 		this.player = new Player();
 		this.initialiseLight();
@@ -28,6 +27,6 @@ class Stage
 
 	public render():void
 	{
-
+		
 	}
 }

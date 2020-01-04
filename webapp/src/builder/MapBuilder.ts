@@ -1,24 +1,26 @@
 class MapBuilder
 {
+	private map:WorldMap;
 	private structureBuilder:StructureBuilder;
 
-	constructor(private generator:Generator, private blocBuilder:BlocBuilder)
+	constructor(private blocBuilder:BlocBuilder)
 	{
+		let generator:Generator = new Generator();
+		
+		this.map = generator.getMap();
 		this.structureBuilder = new StructureBuilder(Utils.datas.get("structures").datas, blocBuilder);
 	}
 	
 	private isBlocVisible(x:number, y:number, z:number):boolean
 	{
-		const g = this.generator;
-		
-		return (!(g.exists(x - 1, y, z) && g.exists(x + 1, y, z)
-			&& g.exists(x, y - 1, z) && g.exists(x, y + 1, z)
-			&& g.exists(x, y, z - 1) && g.exists(x, y, z + 1)));
+		return (!(this.map.exists(x - 1, y, z) && this.map.exists(x + 1, y, z)
+			&& this.map.exists(x, y - 1, z) && this.map.exists(x, y + 1, z)
+			&& this.map.exists(x, y, z - 1) && this.map.exists(x, y, z + 1)));
 	}
 	
 	public build():Cube[]
 	{
-		const SIZE = this.generator.getDimensions();
+		const SIZE = this.map.getDimensions();
 		let output:Cube[] = [];
 		let cur:Cube|undefined;
 		let tile:Cube.Type|undefined;
@@ -26,7 +28,7 @@ class MapBuilder
 		for (let x = SIZE.x; x >= 0; x--) {
 			for (let y = SIZE.y; y >= 0; y--) {
 				for (let z = SIZE.z; z >= 0; z--) {
-					tile = this.generator.getTile(x, y, z);
+					tile = this.map.getTile(x, y, z);
 					if (!tile || !this.isBlocVisible(x, y, z))
 						continue;
 					cur = this.blocBuilder.getNewInstance(tile);
@@ -38,7 +40,7 @@ class MapBuilder
 			}
 		}
 		for (let tmp = 0; tmp < 10; tmp++)
-			this.structureBuilder.generate(Structure.Type.TRUNK, this.generator);
+			this.structureBuilder.generate(Structure.Type.TRUNK, this.map);
 		return (output);
 	}
 }

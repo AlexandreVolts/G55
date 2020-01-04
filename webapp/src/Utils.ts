@@ -28,7 +28,23 @@ abstract class Utils
 
 		position.y = (size - 1) - position.y;
 		output = new BABYLON.Vector4(position.x, position.y, position.x + 1, position.y + 1);
-
 		return (output.scale(1 / size));
+	}
+}
+
+module Utils
+{
+	export class PlanetData
+	{
+		public readonly PLANET:JSONType.Planet;
+		public readonly SIZE:number;
+		public readonly RATIO:number;
+		
+		constructor(id:number)
+		{
+			this.PLANET = Utils.datas.get("planets").datas[id];
+			this.SIZE = Math.pow(2, this.PLANET.size) + 1;
+			this.RATIO = this.PLANET.height / (this.SIZE - 1);
+		}
 	}
 }

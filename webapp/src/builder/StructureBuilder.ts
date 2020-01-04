@@ -9,7 +9,13 @@ class StructureBuilder
 		}
 	}
 
-	public generate(type:Structure.Type, map:Generator):void
+	/**
+	 * Generate a Structure from a structure type on the map
+	 *
+	 * @params type - The type of the structure.
+	 * @params size - The map on which structure will be added.
+	 */
+	public generate(type:Structure.Type, map:WorldMap):void
 	{
 		let descriptor:JSONType.Structure|undefined = this.structures.get(type);
 		let structure:Structure;

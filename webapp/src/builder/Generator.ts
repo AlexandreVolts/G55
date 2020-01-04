@@ -1,27 +1,25 @@
-
 class Generator
 {
-	private readonly PLANET:JSONType.Planet = Utils.datas.get("planets").datas[0];
-	private readonly SIZE:number = Math.pow(2, this.PLANET.size) + 1;
-	private readonly RATIO:number = this.PLANET.height / (this.SIZE - 1);
-	private map:Cube.Type[][][] = [];
-	private datas:LinearMatrix<number> = new LinearMatrix<number>(this.SIZE);
+	private readonly PLANET_DATA:Utils.PlanetData = new Utils.PlanetData(0);
+	private data:LinearMatrix<number> = new LinearMatrix<number>(this.PLANET_DATA.SIZE);
+	private map:WorldMap;
 
 	constructor()
 	{
-		this.generateDatas(this.SIZE);
-		this.generateMap();
+		this.generateData(this.PLANET_DATA.SIZE);
+		this.map = new WorldMap(this.data, this.PLANET_DATA);
 	}
 
-	private generateDatas(size:number):void
+	private generateData(size:number):void
 	{
+		const PLANET = this.PLANET_DATA.PLANET;
 		let i = size - 1;
 		let middle:number, avg:number, padding:number, sum:number, n:number;
 
-		this.datas.set(0, 0, Utils.rand(0, this.PLANET.height));
-		this.datas.set(0, size - 1, Utils.rand(0, this.PLANET.height));
-		this.datas.set(size - 1, 0, Utils.rand(0, this.PLANET.height));
-		this.datas.set(size - 1, size - 1, Utils.rand(0,  this.PLANET.height));
+		this.data.set(0, 0, Utils.rand(0, PLANET.height));
+		this.data.set(0, size - 1, Utils.rand(0, PLANET.height));
+		this.data.set(size - 1, 0, Utils.rand(0, PLANET.height));
+		this.data.set(size - 1, size - 1, Utils.rand(0,  PLANET.height));
 		while (i > 1) {
 			middle = i / 2;
 			for (let j = middle; j < size; j += i) {
@@ -36,19 +34,19 @@ class Generator
 					sum = 0;
 					n = 0;
 					if(j >= middle) {
-						sum += this.datas.get(j - middle, k);
+						sum += this.data.get(j - middle, k);
 						n++;
 					}
 					if(j + middle < size) {
-						sum += this.datas.get(j + middle, k);
+						sum += this.data.get(j + middle, k);
 						n++;
 					}
 					if(k >= middle) {
-						sum += this.datas.get(j, k - middle);
+						sum += this.data.get(j, k - middle);
 						n++;
 					}
 					if(k + middle < size) {
-						sum += this.datas.get(j, k + middle);
+						sum += this.data.get(j, k + middle);
 						n++;
 					}
 					this.set(j, k, Math.round(sum / n) + Utils.rand(-middle, middle));
@@ -57,63 +55,24 @@ class Generator
 			i = middle;
 		}
 	}
-	private generateMap():void
-	{
-		let y:number;
-		
-		for (let i = this.datas.getWidth() - 1; i >= 0; i--) {
-			for (let j = this.datas.getHeight() - 1; j >= 0; j--) {
-				y = ~~(this.datas.get(i, j) * this.RATIO);
-				this.plot(i, y, j, this.PLANET.ground);
-				for (y--; y >= 0; y--) {
-					this.plot(i, y, j, this.PLANET.underground);
-				}
-			}
-		}
-	}
 	private getPointsAverage(x:number, y:number, middle:number):number
 	{
-		let output = this.datas.get(x - middle, y - middle);
+		let output = this.data.get(x - middle, y - middle);
 
-		output += this.datas.get(x - middle, y + middle);
-		output += this.datas.get(x + middle, y - middle);
-		output += this.datas.get(x + middle, y + middle);
+		output += this.data.get(x - middle, y + middle);
+		output += this.data.get(x + middle, y - middle);
+		output += this.data.get(x + middle, y + middle);
 		return (Math.round(output / 4));
-	}
-	private plot(x:number, y:number, z:number, value:Cube.Type):void
-	{
-		if (!this.map[x])
-			this.map[x] = [];
-		if (!this.map[x][y])
-			this.map[x][y] = [];
-		this.map[x][y][z] = value;
 	}
 	private set(x:number, y:number, value:number):void
 	{
 		if (value < 0)
 			value = 0;
-		this.datas.set(x, y, value);
+		this.data.set(x, y, value);
 	}
-	
-	public exists(x:number, y:number, z:number):boolean
+
+	public getMap():WorldMap
 	{
-		return (this.map[x] && this.map[x][y] && this.map[x][y][z] != undefined);
-	}
-	public getDimensions():BABYLON.Vector3
-	{
-		return (new BABYLON.Vector3(this.SIZE - 1, this.PLANET.height - 1, this.SIZE - 1));
-	}
-	public getTile(x:number, y:number, z:number):Cube.Type|undefined
-	{
-		if (!this.exists(x, y, z))
-			return (undefined);
-		return (this.map[x][y][z]);
-	}
-	public getRandomHeight():BABYLON.Vector3
-	{
-		let output = new BABYLON.Vector3(Utils.rand(0, this.SIZE), 0, Utils.rand(0, this.SIZE));
-		
-		output.y = ~~(this.datas.get(output.x, output.z) * this.RATIO);
-		return (output);
+		return (this.map);
 	}
 }
