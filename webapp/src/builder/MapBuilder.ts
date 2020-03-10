@@ -1,13 +1,15 @@
 class MapBuilder
 {
+	private readonly PLANET_DATA:Utils.PlanetData = new Utils.PlanetData(0);
 	private map:WorldMap;
 	private structureBuilder:StructureBuilder;
 
 	constructor(private blocBuilder:BlocBuilder)
 	{
-		let generator:Generator = new Generator();
-		
-		this.map = generator.getMap();
+		let generator:IGenerator = new DiamondSquareGenerator();
+		let size = new BABYLON.Vector3(this.PLANET_DATA.SIZE, this.PLANET_DATA.PLANET.height, this.PLANET_DATA.SIZE);
+
+		this.map = new WorldMap(generator.generate(size), this.PLANET_DATA);
 		this.structureBuilder = new StructureBuilder(Utils.datas.get("structures").datas, blocBuilder);
 	}
 	
@@ -18,6 +20,12 @@ class MapBuilder
 			&& this.map.exists(x, y, z - 1) && this.map.exists(x, y, z + 1)));
 	}
 	
+	/**
+	 * Build the map with the cubes which will be on the map.
+	 * Only blocs which are visible by the player are generated.
+	 * 
+	 * @returns An single-dimension array of Cubes objects containing all visible Cubes as BABYLON 3D objects.
+	 */
 	public build():Cube[]
 	{
 		const SIZE = this.map.getDimensions();

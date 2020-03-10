@@ -2,19 +2,39 @@ abstract class Utils
 {
 	public static datas:JSONLoaderMap;
 
-	public static rand(min:number, max:number):number
+	/**
+	 * Returns a random number between min (included) and max (excluded).
+	 * If the second parameter is not set, returns a number between 0 and min excluded (or min and 0 if min < 0).
+	 * 
+	 * @params min - The minimum value of the random number
+	 * @params max - The maximum value of the random number.
+	 * @returns A random number between min and max.
+	 */
+	public static rand(min:number, max?:number):number
 	{
-		return (~~(min + Math.random() * (max - min)));
+		if (max != undefined)
+			return (~~(min + Math.random() * (max - min)));
+		return (~~(Math.random() * min));
 	}
-	public static getRandomVector(min:BABYLON.Vector3, max:BABYLON.Vector3):BABYLON.Vector3
+
+	/**
+	 * Returns a random BABYLON.Vector3 between min (included) and max (excluded).
+	 * If the second parameter is not set, returns a BABYLON.Vector3 between 0 and min excluded (or min and 0 if min < 0).
+	 * 
+	 * @params min - The minimum values of the random vector
+	 * @params max - The maximum values of the random vector.
+	 * @returns A random BABYLON.Vector3 between min and max.
+	 */
+	public static getRandomVector(min:BABYLON.Vector3, max?:BABYLON.Vector3):BABYLON.Vector3
 	{
 		let output:BABYLON.Vector3 = new BABYLON.Vector3();
 
-		output.x = Utils.rand(min.x, max.x);
-		output.y = Utils.rand(min.y, max.y);
-		output.z = Utils.rand(min.z, max.z);
+		output.x = Utils.rand(min.x, max != undefined ? max.x : max);
+		output.y = Utils.rand(min.y, max != undefined ? max.y : max);
+		output.z = Utils.rand(min.z, max != undefined ? max.z : max);
 		return (output);
 	}
+
 	/**
 	 * Returns a faceUV texture vector based on a position and a size.
 	 *
