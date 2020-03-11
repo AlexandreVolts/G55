@@ -13,9 +13,9 @@ class StructureBuilder
 	 * Generate a Structure from a structure type on the map
 	 *
 	 * @params type - The type of the structure.
-	 * @params size - The map on which structure will be added.
+	 * @params position - The position on the map where the structure must be created.
 	 */
-	public generate(type:Structure.Type, map:WorldMap):void
+	public generate(type:Structure.Type, position:BABYLON.Vector3):void
 	{
 		let descriptor:JSONType.Structure|undefined = this.structures.get(type);
 		let structure:Structure;
@@ -23,7 +23,7 @@ class StructureBuilder
 		if (!descriptor)
 			return;
 		structure = new Structure(descriptor);
-		structure.position = map.getRandomHeight();
+		structure.position = position;
 		structure.generate(this.blocBuilder);
 	}
 }

@@ -1,4 +1,4 @@
-class WorldMap
+class Planet
 {
 	private readonly PLANET_DATA:Utils.PlanetData;
 	private map:Cube.Type[][][] = [];
@@ -17,6 +17,11 @@ class WorldMap
 			this.map[x][y] = [];
 		this.map[x][y][z] = value;
 	}
+
+	/**
+	 * Transform the LinearMatrix into a 3D array.
+	 * Each case of the array contains the type of its tile.
+	 */
 	private generateMap():void
 	{
 		let y:number;
@@ -32,9 +37,23 @@ class WorldMap
 		}
 	}
 
+	/**
+	 * Returns true if a bloc exists at the targeted position, false otherwise.
+	 *
+	 * @params x - The x position of the targeted bloc.
+	 * @params y - The y position of the targeted bloc.
+	 * @params z - The z position of the targeted bloc.
+	 * @returns A boolean indicates if the bloc exists or not.
+	 */
 	public exists(x:number, y:number, z:number):boolean
 	{
 		return (this.map[x] && this.map[x][y] && this.map[x][y][z] != undefined);
+	}
+	public isBlocVisible(x:number, y:number, z:number):boolean
+	{
+		return (!(this.exists(x - 1, y, z) && this.exists(x + 1, y, z)
+			&& this.exists(x, y - 1, z) && this.exists(x, y + 1, z)
+			&& this.exists(x, y, z - 1) && this.exists(x, y, z + 1)));
 	}
 	public getDimensions():BABYLON.Vector3
 	{
@@ -42,7 +61,13 @@ class WorldMap
 		
 		return (new BABYLON.Vector3(SIZE - 1, this.PLANET_DATA.PLANET.height - 1, SIZE - 1));
 	}
-	public getRandomHeight():BABYLON.Vector3
+	
+	/**
+	 * Returns a random 3D position of the Planet's surface.
+	 * 
+	 * @returns A BABYLON.Vector3 representing the random position.
+	 */
+	public getRandomPosition():BABYLON.Vector3
 	{
 		const SIZE = this.PLANET_DATA.SIZE;
 		let output = new BABYLON.Vector3(Utils.rand(0, SIZE), 0, Utils.rand(0, SIZE));

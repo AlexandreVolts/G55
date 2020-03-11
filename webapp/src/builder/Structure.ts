@@ -13,18 +13,16 @@ class Structure extends BABYLON.TransformNode
 	public generate(blocBuilder:BlocBuilder):void
 	{
 		let cur:Cube|undefined;
-		
-		for (let x = this.size.x - 1; x >= 0; x--) {
-			for (let y = this.size.y - 1; y >= 0; y--) {
-				for (let z = this.size.z - 1; z >= 0; z--) {
-					cur = blocBuilder.getNewInstance(this.descriptor.bloc);
-					if (!cur)
-						continue;
-					cur.position = new BABYLON.Vector3(x, y, z);
-					cur.parent = this;
-				}
-			}
-		}
+		let size = this.size.subtract(new BABYLON.Vector3(1, 1, 1));
+		let it = new ThreeDimensionsIterator(size);
+
+		it.run((x:number, y:number, z:number) => {
+			cur = blocBuilder.getNewInstance(this.descriptor.bloc);
+			if (!cur)
+				return;
+			cur.position = new BABYLON.Vector3(x, y, z);
+			cur.parent = this;
+		});
 	}
 	public getSize():BABYLON.Vector3
 	{
