@@ -19,8 +19,7 @@ class MapBuilder
 		let cur:Cube|undefined;
 		let tile:Cube.Type|undefined;
 		let it = new ThreeDimensionsIterator(planet.getDimensions());
-		
-		console.log(it);
+
 		it.run((x:number, y:number, z:number) => {
 			tile = planet.getTile(x, y, z);
 			if (!tile || !planet.isBlocVisible(x, y, z))

@@ -16,6 +16,7 @@ class BlocBuilder
 		texture.hasAlpha = true;
 		material.backFaceCulling = true;
 		material.diffuseTexture = texture;
+		material.freeze();
 		for (let i = 0, len = datas.length; i < len; i++) {
 			texPosition = datas[i].position;
 			params.faceUV = [];
@@ -24,10 +25,13 @@ class BlocBuilder
 				params.faceUV.push(sideUv);
 			}
 			params.faceUV.push(Utils.getFaceUV(texPosition));
-			params.faceUV.push(Utils.getFaceUV(new BABYLON.Vector2(texPosition.x + 1, texPosition.y)))
+			params.faceUV.push(Utils.getFaceUV(new BABYLON.Vector2(texPosition.x + 1, texPosition.y)));
 			mesh = BABYLON.MeshBuilder.CreateBox("bb-" + datas[i].name, params, Game.scene);
 			mesh.material = material;
 			mesh.isVisible = false;
+			mesh.cullingStrategy = BABYLON.AbstractMesh.CULLINGSTRATEGY_OPTIMISTIC_INCLUSION;
+			mesh.convertToUnIndexedMesh();
+			mesh.freezeWorldMatrix();
 			this.blocs.set(datas[i].name, mesh);
 		}
 	}

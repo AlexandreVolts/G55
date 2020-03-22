@@ -27,7 +27,7 @@ class Stage
 	{
 		this.mapBuilder.build(this.planet);
 		this.player.position = this.planet.getRandomPosition();
-		this.player.position.y += 2;
+		this.player.position.y += 5;
 	}
 	private initialiseLight():void
 	{
@@ -37,6 +37,6 @@ class Stage
 
 	public render():void
 	{
-		console.log(this.player.position);
+		//console.log(this.player.position);
 	}
 }

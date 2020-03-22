@@ -3,6 +3,7 @@ class Cube extends BABYLON.InstancedMesh
 	constructor(id:string, source:BABYLON.Mesh)
 	{
 		super(id, source);
+		this.checkCollisions = true;
 	}
 }
 

@@ -49,11 +49,34 @@ class Planet
 	{
 		return (this.map[x] && this.map[x][y] && this.map[x][y][z] != undefined);
 	}
+
+	/**
+	 * Returns true if a bloc is visible at the targeted position, false otherwise.
+	 * A bloc is considered as visible if it isn't surrounded on all its faces by blocs.
+	 *
+	 * @params x - The x position of the targeted bloc.
+	 * @params y - The y position of the targeted bloc.
+	 * @params z - The z position of the targeted bloc.
+	 * @returns A boolean indicates if the bloc is visible or not.
+	 */
 	public isBlocVisible(x:number, y:number, z:number):boolean
 	{
-		return (!(this.exists(x - 1, y, z) && this.exists(x + 1, y, z)
-			&& this.exists(x, y - 1, z) && this.exists(x, y + 1, z)
-			&& this.exists(x, y, z - 1) && this.exists(x, y, z + 1)));
+		const SIZE = this.PLANET_DATA.SIZE;
+		let isVisible:number = 1;
+
+		isVisible &= (x == 0 || this.exists(x - 1, y, z)) ? 1 : 0;
+		isVisible &= (x == SIZE - 1 || this.exists(x + 1, y, z)) ? 1 : 0;
+		isVisible &= (y == 0 || this.exists(x, y - 1, z)) ? 1 : 0;
+		isVisible &= (this.exists(x, y + 1, z)) ? 1 : 0;
+		isVisible &= (z == 0 || this.exists(x, y, z - 1)) ? 1 : 0;
+		isVisible &= (z == SIZE - 1 || this.exists(x, y, z + 1)) ? 1 : 0;
+		return (!isVisible);
+	}
+	public isOnBorder(x:number, y:number, z:number):boolean
+	{
+		const SIZE = this.PLANET_DATA.SIZE;
+		
+		return (x <= 0 || y <= 0 || z <= 0 || x >= SIZE - 1 || z >= SIZE - 1);
 	}
 	public getDimensions():BABYLON.Vector3
 	{

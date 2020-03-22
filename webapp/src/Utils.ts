@@ -44,10 +44,10 @@ abstract class Utils
 	 */
 	public static getFaceUV(position:BABYLON.Vector2, size:number = 16):BABYLON.Vector4
 	{
+		const Y = (size - 1) - position.y;
 		let output:BABYLON.Vector4;
 
-		position.y = (size - 1) - position.y;
-		output = new BABYLON.Vector4(position.x, position.y, position.x + 1, position.y + 1);
+		output = new BABYLON.Vector4(position.x, Y, position.x + 1, Y + 1);
 		return (output.scale(1 / size));
 	}
 }
